@@ -43,7 +43,7 @@
 2. 提取三元组，运行extracting_triples.py 
 3. 三元组建模，连接neo4j数据库，运行neo4j_match.py
    1. 连接bolt://bolt://8.130.118.241:7687
-   2. 账户：neo4j（community版本不修改的话，默认账户为neo4j)
+   2. 账户：neo4j(community版本不修改的话，默认账户为neo4j)
    3. 密码：csxxxx(班级号)
 4. 连接数据库，查看知识图谱效果
 
