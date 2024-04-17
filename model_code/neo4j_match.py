@@ -32,6 +32,6 @@ def import_csv_to_neo4j(csv_file):
     return len(subjects)  # 返回不同主题的数量
 
 # 示例用法
-csv_file = 'output_file_germany.csv'
+csv_file = './model_csv/output_file_germany.csv'
 different_subjects_count = import_csv_to_neo4j(csv_file)
 print("不同主题的数量:", different_subjects_count)

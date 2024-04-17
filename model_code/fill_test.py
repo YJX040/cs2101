@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # 读取CSV文件
-df = pd.read_csv('output_file_with_null_copy.csv')
+df = pd.read_csv('./model_csv/output_file_with_null_copy.csv')
 
 # 定义函数：根据标题获取信息
 def get_info_from_baidu(title):
@@ -44,4 +44,4 @@ for index, row in df.iterrows():
         df.at[index, 'detail_url'] = link
     
 # 将更新后的数据写回CSV文件
-df.to_csv('output_baidu_updated.csv', index=False)
+df.to_csv('./model_csv/output_baidu_updated.csv', index=False)

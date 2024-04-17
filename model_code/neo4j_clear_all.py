@@ -1,5 +1,3 @@
-
- 
 from py2neo import Graph
 def del_all_graph(graph):
     #删除节点

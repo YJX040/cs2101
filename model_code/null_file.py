@@ -16,6 +16,6 @@ def output_rows_with_null(csv_file, output_file):
                                      row['size']])
 
 # 示例用法
-csv_file = 'museum_germany.csv'
-output_file = 'output_file_with_null.csv'
+csv_file = './model_csv/museum_germany.csv'
+output_file = './model_csv/output_file_with_null.csv'
 output_rows_with_null(csv_file, output_file)

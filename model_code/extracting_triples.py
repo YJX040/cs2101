@@ -36,7 +36,7 @@ def convert_to_triplets(csv_file, output_file):
     return len(subjects)  # 返回不同主体的数量
 
 # 示例用法
-csv_file = 'museum_items_of_china.csv'
-output_file = 'output_file_germany.csv'
+csv_file = './model_csv/museum_germany.csv'
+output_file = './model_csv/output_file_germany.csv'
 different_subjects_count = convert_to_triplets(csv_file, output_file)
 print("不同主体的数量:", different_subjects_count)

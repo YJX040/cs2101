@@ -7,6 +7,6 @@ def detect_encoding(file_path):
         return encoding_result['encoding']
 
 # 示例用法
-csv_file = 'museum_knowledge_graph_museum_items_of_china.csv'
+csv_file = './model_csv/museum_germany.csv'
 encoding = detect_encoding(csv_file)
 print("CSV 文件编码为:", encoding)
