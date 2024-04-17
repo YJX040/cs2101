@@ -1,11 +1,3 @@
-'''
-Author: Fhx0902 fanhaoxin0902@qq.com
-Date: 2024-04-16 19:00:09
-LastEditors: Fhx0902 fanhaoxin0902@qq.com
-LastEditTime: 2024-04-16 23:53:28
-FilePath: \venu_cs2101\mine.py
-Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
-'''
 import csv
 
 def convert_to_triplets(csv_file, output_file):
