@@ -9,6 +9,7 @@
   * bs4
   * csv
   * chardet
+  * googletrans
 
 * neo4j-community(jdk11起步)
 
@@ -27,6 +28,14 @@
     * neo4j数据库建立三元组
   * null_file.py
     * 提取csv内title存在，同时信息存在null的文物
+  * translator_google
+    * 调用Google机器翻译（除了id和url，img以外的列都翻译）
+    * 超时或者中断直接重新运行，会继续上次记录继续翻译
+    * 翻译的范围直接修改，位置注释标注了
+  * translator_youdao
+    * 有道的api，但翻译效果很差，不如上一个
+  * jpg_change
+    * 修改成2400*2400
 * model_csv
   * museum_x.csv
     * 博物馆数据
@@ -36,6 +45,13 @@
       * _updated 补充null后的文件
       * _germany 对应博物馆抓换后的三元组值
       * _null 空值文物，copy为测试file_test的数据
+  * museum_translator
+    * 都是google对应的，看到youdao就是有道api翻译的
+    * file是最终全部翻译成功的，不包括空值之类的
+    * partial是所有翻译的，包括空值
+    * 两个的最后一列都是翻译状态，1为翻译完成，0为还需要我们补充or自己去翻译的
+    * 过程会生成normal...status.csv和一个status.txt，存储翻译过程是否异常终止的，不用管
+ 
 
 ## 实现过程
 
