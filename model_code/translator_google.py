@@ -13,13 +13,19 @@ def translate_with_retry(text, translator, source_language, target_language):
     retries = 0
     while retries < MAX_RETRIES:
         try:
-            translated_text = translator.translate(text, src=source_language, dest=target_language).text
+            if text is None:
+                raise ValueError("翻译文本不能为空")
+            translation = translator.translate(text, src=source_language, dest=target_language)
+            translated_text = translation.text
             return translated_text
         except (socket.timeout, TimeoutError, requests.exceptions.Timeout, requests.exceptions.RequestException) as e:
             print(f"发生异常: {type(e).__name__}")
             print(f"超时异常，重试中 ({retries+1}/{MAX_RETRIES})...")
             retries += 1
             time.sleep(RETRY_INTERVAL)
+        except ValueError as ve:
+            print(f"发生异常: {ve}")
+            return None
     print("达到最大重试次数，放弃翻译。")
     return None
 
@@ -33,7 +39,7 @@ columns_to_translate = ['museum', 'title', 'era', 'material', 'size', 'descripti
 start_index = 0
 
 # 设置翻译结束的行数
-end_index = 100
+end_index = 4827
 
 # 设置源语言和目标语言
 source_language = 'de'
@@ -90,19 +96,27 @@ for index, row in df.iterrows():
     for column_name in columns_to_translate:
         # 检查值是否不为空且为源语言
         if pd.notnull(row[column_name]) and row[column_name] != '':
-            if translator.detect(row[column_name]).lang == source_language:
-                translated_text = translate_with_retry(row[column_name], translator, source_language, target_language)
-                if translated_text:
-                    df.at[index, column_name] = translated_text
-                    print(f"翻译成功：{column_name} - {row[column_name]} -> {translated_text}")
-                else:
-                    translation_status = 0  # 存在翻译失败的情况
-                    print(f"翻译失败：{column_name} - {row[column_name]}")
+            text_to_translate = row[column_name]
+            # 添加错误处理机制
+            if text_to_translate.strip() != '':
+                try:
+                    detected_language = translator.detect(text_to_translate)
+                    if detected_language is not None and detected_language.lang == source_language:
+                        translated_text = translate_with_retry(text_to_translate, translator, source_language, target_language)
+                        if translated_text:
+                            df.at[index, column_name] = translated_text
+                            print(f"翻译成功：{column_name} - {text_to_translate} -> {translated_text}")
+                        else:
+                            translation_status = 0  # 存在翻译失败的情况
+                            print(f"翻译失败：{column_name} - {text_to_translate}")
+                    else:
+                        print(f"{column_name} 不是 {source_language} 文本：{text_to_translate}")
+                except Exception as e:
+                    print(f"发生异常：{e}")
             else:
-                print(f"{column_name} 不是 {source_language} 文本：{row[column_name]}")
-        else:
-            print(f"{column_name} 为空或非 {source_language} 文本")
-            translation_status = 0  # 存在空文本
+                print(f"{column_name} 为空或非 {source_language} 文本")
+                translation_status = 0  # 存在空文本
+
 
     # 在DataFrame中添加翻译状态列
     df.at[index, 'translation_status'] = translation_status
