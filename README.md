@@ -10,6 +10,7 @@
   * csv
   * chardet
   * googletrans
+  * googletrans
 
 * neo4j-community(jdk11起步)
 
